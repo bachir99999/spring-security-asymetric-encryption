@@ -3,26 +3,33 @@ package com.bachir9.app.user;
 
 import com.bachir9.app.role.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NotNull
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "USERS")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -52,7 +59,7 @@ public class User {
     private boolean locked;
 
     @Column(name = "IS_CREDENTIALS_EXPIRED")
-    private boolean expired;
+    private boolean credentialsExpired;
 
     @Column(name = "IS_EMAIL_VERIFIED")
     private boolean emailVerified;
@@ -73,4 +80,31 @@ public class User {
             joinColumns = {@JoinColumn(name="USERS_ID")},
             inverseJoinColumns = {@JoinColumn(name="ROLES_ID")})
     private List<Role> roles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(CollectionUtils.isEmpty(roles))
+            return List.of();
+        return this.roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !this.locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !this.credentialsExpired;
+    }
 }
