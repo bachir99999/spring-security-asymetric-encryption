@@ -17,3 +17,6 @@ spring:
         format_sql: true
 app:
   security:
+    jwt:
+      access-token-expiration: 86400000 #24h for testing env
+      refresh-token-expiration: 60400000 #7 days for testing env
