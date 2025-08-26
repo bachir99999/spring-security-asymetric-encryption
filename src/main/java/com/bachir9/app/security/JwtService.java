@@ -49,7 +49,7 @@ public class JwtService {
     }
 
     public boolean isTokenValid(final String token, final String expectedUsername) {
-        final String username = extractUsername(token);
+        final var username = extractUsername(token);
         return username.equals(expectedUsername) && !isTokenExpired(token);
     }
 
@@ -75,7 +75,7 @@ public class JwtService {
     }
 
     public String refreshAccessToken(final String refreshToken) {
-        final Claims claims = extractClaims(refreshToken);
+        final var claims = extractClaims(refreshToken);
 
         if (!"REFRESH_TOKEN".equals(claims.get(TOKEN_TYPE, String.class))) {
             throw new RuntimeException("Invalid token type");
@@ -84,7 +84,7 @@ public class JwtService {
             throw new RuntimeException("Refresh token expired");
         }
 
-        final String username = claims.getSubject();
+        final var username = claims.getSubject();
         return generateAccessToken(username);
     }
 }
