@@ -2,15 +2,16 @@ package com.bachir9.app.user;
 
 import com.bachir9.app.auth.request.RegistrationRequest;
 import com.bachir9.app.user.request.ProfileUpdateRequest;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper {
-    // private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    /*
     public User toUser(final RegistrationRequest request) {
         return User.builder()
                 .firstName(request.getFirstName())
@@ -25,7 +26,7 @@ public class UserMapper {
                 .phoneVerified(false)
                 .build();
     }
-*/
+
     public void mergeUserInfo(final User user, final ProfileUpdateRequest request) {
         if (StringUtils.isNotBlank(request.getFirstName()) && !user.getFirstName()
                 .equals(request.getFirstName())) {
