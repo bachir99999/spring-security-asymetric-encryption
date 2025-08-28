@@ -77,7 +77,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse refreshToken(final RefreshRequest request) {
-        return null;
+        final var newAccessToken = this.jwtService.refreshAccessToken(request.getRefreshToken());
+        final var tokenType = "Bearer";
+        return AuthenticationResponse.builder().accessToken(newAccessToken).refreshToken(request.getRefreshToken()).tokenType(tokenType).build();
     }
 
     private void checkUserEmail(final String email) {
