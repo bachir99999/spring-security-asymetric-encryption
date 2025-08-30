@@ -1,5 +1,6 @@
 package com.bachir9.app.auth.request;
 
+import com.bachir9.app.validation.NonDisposableEmail;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,7 +40,7 @@ public class RegistrationRequest {
 
     @NotBlank(message = "VALIDATION.REGISTRATION.EMAIL.BLANK")
     @Email(message = "VALIDATION.REGISTRATION.EMAIL.FORMAT")
-    // @NonDisposableEmail(message = "VALIDATION.REGISTRATION.EMAIL.DISPOSABLE")
+    @NonDisposableEmail(message = "VALIDATION.REGISTRATION.EMAIL.DISPOSABLE")
     @Schema(example = "abc@mail.com")
     private String email;
 

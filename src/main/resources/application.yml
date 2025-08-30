@@ -20,3 +20,5 @@ app:
     jwt:
       access-token-expiration: 86400000 #24h for testing env
       refresh-token-expiration: 60400000 #7 days for testing env
+
+    disposable-email: 10minutemail,20minutemail,33mail,5ymail,anonbox,guerrillamail,mailinator,maildrop,mailnesia,moakt,my10minutemail,throwawaymail,trashmail,temp-mail,tempmail,truemail,yopmail
