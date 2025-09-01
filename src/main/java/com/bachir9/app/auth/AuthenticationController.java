@@ -1,5 +1,6 @@
 package com.bachir9.app.auth;
 
+import com.bachir9.app.auth.impl.AuthenticationServiceImpl;
 import com.bachir9.app.auth.request.AuthenticationRequest;
 import com.bachir9.app.auth.request.RefreshRequest;
 import com.bachir9.app.auth.response.AuthenticationResponse;

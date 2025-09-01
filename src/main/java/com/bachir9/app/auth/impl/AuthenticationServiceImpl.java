@@ -60,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         final var roles = new ArrayList<Role>();
         roles.add(userRole);
 
-        final User user = this.userMapper.toUser(request);
+        final var user = this.userMapper.toUser(request);
         user.setRoles(roles);
         log.debug("Saving user {}", user);
 

@@ -33,7 +33,7 @@ public class KeyUtils {
     }
 
     private static String readKeyFromResource(String filePath) throws Exception {
-        try(final var is  = KeyUtils.class.getResourceAsStream(filePath)){
+        try(final var is  = KeyUtils.class.getClassLoader().getResourceAsStream(filePath)){
             if(is == null){
                 throw new IllegalArgumentException("File not found: " + filePath);
             }
